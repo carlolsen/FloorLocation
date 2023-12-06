@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
+using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using FloorLocation.Models;
 using OfficeOpenXml;
-using System.Collections.Generic;
 
 namespace FloorLocation.Controllers;
 
@@ -44,7 +44,7 @@ public class HomeController : Controller
         }
         catch (Exception ex)
         {
-            Console.WriteLine("LocationContext.cs, at line 45: " + ex.StackTrace);
+            Console.WriteLine("HomeController.cs, at line 47: " + ex.StackTrace);
         }
         return View(list);
     }
@@ -55,10 +55,60 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult Add(Location objLocation)
+    public IActionResult Add(Location _objLocation)
     {
-        // Check to make sure the LocationName does not already exist
-        return RedirectToAction("Index");
+        bool found = false;
+        int rowCount = 0;
+        FileInfo file = new FileInfo(@"/Users/carlolsen/projects/FloorLocation/FloorLocation/FLOOR_LOCATION.xlsx");
+        try
+        {
+            using (ExcelPackage package = new ExcelPackage(file))
+            {
+                ExcelWorksheet worksheet = package.Workbook.Worksheets["WMS Location Floor Location"];
+                rowCount = worksheet.Dimension.End.Row;
+                for (int row = 2; row <= rowCount; row++)
+                {
+                    if (_objLocation.LocationName == worksheet.Cells[row, 1].Value.ToString()!)
+                    {
+                        found = true;
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("HomeController.cs, at line 80: " + ex.StackTrace);
+        }
+        if(found == true)
+        {
+            // Validation Failed: Duplicate Location Name
+            return RedirectToAction("Index");
+        }
+        else
+        {
+            try
+            {
+                using (ExcelPackage package = new ExcelPackage(file))
+                {
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets["WMS Location Floor Location"];
+                    int newRow = rowCount + 1;
+                    worksheet.InsertRow(newRow, 1);
+                    string A = @"A" + newRow.ToString();
+                    string B = @"B" + newRow.ToString();
+                    string C = @"C" + newRow.ToString();
+                    worksheet.Cells[A].Value = _objLocation.LocationName;
+                    worksheet.Cells[B].Value = _objLocation.LocationId;
+                    worksheet.Cells[C].Value = _objLocation.IsClearance;
+                    package.Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("HomeController.cs, at line 105: " + ex.StackTrace);
+            }
+            // Validation Successful: Location Name New
+            return RedirectToAction("Index");
+        }
     }
 
     public IActionResult Update(string LocationName = "")
@@ -92,7 +142,7 @@ public class HomeController : Controller
         }
         catch (Exception ex)
         {
-            Console.WriteLine("LocationContext.cs, at line 45: " + ex.StackTrace);
+            Console.WriteLine("HomeController.cs, at line 125: " + ex.StackTrace);
         }
         return View(item);
     }
@@ -134,7 +184,7 @@ public class HomeController : Controller
         }
         catch (Exception ex)
         {
-            Console.WriteLine("LocationContext.cs, at line 45: " + ex.StackTrace);
+            Console.WriteLine("HomeController.cs, at line 167: " + ex.StackTrace);
         }
         return View(item);
     }
