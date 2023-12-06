@@ -1,0 +1,41 @@
+﻿@model IEnumerable<FloorLocation.Models.Location>
+@{
+    ViewData["Title"] = "Locations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="wrapper">
+    <div class="container">
+        <a asp-action="Add">Add Location</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Location Name</th>
+                    <th scope="col">Location Id</th>
+                    <th scope="col">Is Clearance</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayTextFor(modelItem => item.LocationName)
+                        </td>
+                        <td>
+                            @Html.DisplayTextFor(modelItem => item.LocationId)
+                        </td>
+                        <td>
+                            @Html.DisplayTextFor(modelItem => item.IsClearance)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Update Location", "Update", new { LocationName = item.LocationName })
+                            |
+                            @Html.ActionLink("Delete Location", "Delete", new { LocationName = item.LocationName })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+﻿@model FloorLocation.Models.Location
+@{
+    ViewData["Title"] = "Delete Location";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="wrapper">
+    <div class="container">
+        <a asp-action="Index">Floor Locations</a>
+        <div class="pageTitle">Delete Location</div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.LocationName)
+            <table class="edit">
+                <tr>
+                    <th>Location Name</th>
+                    <td>@Model.LocationName</td>
+                </tr>
+                <tr>
+                    <th>Location ID</th>
+                    <td>
+                        @Model.LocationId
+                    </td>
+                </tr>
+                <tr>
+                    <th>Is Clearance</th>
+                    <td>
+                        @Model.IsClearance
+                    </td>
+                </tr>
+            </table>
+            <div class="btnRow"><input type="submit" value="DELETE" class="btn" /><div class="btn">@Html.ActionLink("CANCEL", "Index")</div></div>
+        }
+    </div>
+</div>
