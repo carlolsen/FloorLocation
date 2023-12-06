@@ -148,8 +148,35 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult Update(Location objLocation)
+    public IActionResult Update(Location _objLocation)
     {
+        FileInfo file = new FileInfo(@"/Users/carlolsen/projects/FloorLocation/FloorLocation/FLOOR_LOCATION.xlsx");
+        try
+        {
+            using (ExcelPackage package = new ExcelPackage(file))
+            {
+                ExcelWorksheet worksheet = package.Workbook.Worksheets["WMS Location Floor Location"];
+                int rowCount = worksheet.Dimension.End.Row;
+                for (int row = 2; row <= rowCount; row++)
+                {
+                    if (_objLocation.LocationName == worksheet.Cells[row, 1].Value.ToString()!)
+                    {
+                        string A = @"A" + row.ToString();
+                        string B = @"B" + row.ToString();
+                        string C = @"C" + row.ToString();
+                        worksheet.Cells[A].Value = _objLocation.LocationName;
+                        worksheet.Cells[B].Value = _objLocation.LocationId;
+                        worksheet.Cells[C].Value = _objLocation.IsClearance;
+                        package.Save();
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("HomeController.cs, at line 80: " + ex.StackTrace);
+        }
+        // Validation Successful: Location Name Found
         return RedirectToAction("Index");
     }
 
