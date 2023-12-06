@@ -54,3 +54,31 @@ table.table {
         text-decoration: none;
         color: #000000;
     }
+
+table.view,
+table.edit {
+    border-collapse: collapse;
+    width: 600px;
+}
+
+    table.view th,
+    table.edit th,
+    table.view td,
+    table.edit td {
+        margin: 0px;
+        padding: 1px;
+        white-space: nowrap;
+    }
+
+    table.view th,
+    table.view td {
+        margin: 0px;
+        padding: 1px;
+        white-space: nowrap;
+        border-bottom: 1px solid #cccccc;
+    }
+
+    table.view th,
+    table.edit th {
+        width: 160px;
+    }
