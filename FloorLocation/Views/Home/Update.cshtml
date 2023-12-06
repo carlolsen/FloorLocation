@@ -27,7 +27,9 @@
                 <tr>
                     <th>Is Clearance</th>
                     <td>
-                        @Html.EditorFor(model => model.IsClearance, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.DropDownListFor(model => model.IsClearance,
+                    new SelectList(Enum.GetValues(typeof(Clearance))),
+                    "Select Clearance")
                         @Html.ValidationMessageFor(model => model.IsClearance, "", new { @class = "text-danger" })
                     </td>
                 </tr>

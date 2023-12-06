@@ -8,3 +8,9 @@ public class Location
 
     public string? IsClearance { get; set; }
 }
+
+public enum Clearance
+{
+    Y,
+    N
+}
