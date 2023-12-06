@@ -9,7 +9,7 @@
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
@@ -29,3 +29,28 @@ div.container {
 table.table {
     width: 100%;
 }
+
+.btnRow {
+    display: flex;
+    width: 140px;
+    justify-content: space-between;
+}
+
+.btn {
+    border: 1px solid #cccccc;
+    border-radius: 2px;
+    background-color: #eeeeee;
+    margin: 2px;
+    padding: 0px 4px;
+}
+
+    .btn a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+        padding: 0px;
+        border: none;
+        text-decoration: none;
+        color: #000000;
+    }
