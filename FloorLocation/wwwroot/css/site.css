@@ -44,41 +44,29 @@ table.table {
     padding: 0px 4px;
 }
 
-    .btn a {
-        display: block;
-        width: 100%;
-        height: 100%;
-        margin: 0px;
-        padding: 0px;
-        border: none;
-        text-decoration: none;
-        color: #000000;
-    }
+.btn a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    text-decoration: none;
+    color: #000000;
+}
 
-table.view,
 table.edit {
     border-collapse: collapse;
     width: 600px;
 }
 
-    table.view th,
-    table.edit th,
-    table.view td,
-    table.edit td {
-        margin: 0px;
-        padding: 1px;
-        white-space: nowrap;
-    }
+table.edit th,
+table.edit td {
+    margin: 0px;
+    padding: 1px;
+    white-space: nowrap;
+}
 
-    table.view th,
-    table.view td {
-        margin: 0px;
-        padding: 1px;
-        white-space: nowrap;
-        border-bottom: 1px solid #cccccc;
-    }
-
-    table.view th,
-    table.edit th {
-        width: 160px;
-    }
+table.edit th {
+    width: 160px;
+}
