@@ -5,7 +5,7 @@
 }
 <div class="wrapper">
     <div class="container">
-        <a asp-action="Add">Add Location</a>
+        <a asp-action="Add" class="btn">Add Location</a>
         <table class="table">
             <thead>
                 <tr>
@@ -29,9 +29,9 @@
                             @Html.DisplayTextFor(modelItem => item.IsClearance)
                         </td>
                         <td>
-                            @Html.ActionLink("Update Location", "Update", new { LocationName = item.LocationName })
+                            @Html.ActionLink("Update", "Update", new { LocationName = item.LocationName }, new { @class = "btn" })
                             |
-                            @Html.ActionLink("Delete Location", "Delete", new { LocationName = item.LocationName })
+                            @Html.ActionLink("Delete", "Delete", new { LocationName = item.LocationName }, new { @class = "btn" })
                         </td>
                     </tr>
                 }
