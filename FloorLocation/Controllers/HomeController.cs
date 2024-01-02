@@ -17,36 +17,8 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        List<Location> list = new List<Location>();
-        try
-        {
-            FileInfo file = new FileInfo(@"/Users/carlolsen/projects/FloorLocation/FloorLocation/FLOOR_LOCATION.xlsx");
-            using (ExcelPackage package = new ExcelPackage(file))
-            {
-                ExcelWorksheet worksheet = package.Workbook.Worksheets["WMS Location Floor Location"];
-                int rowCount = worksheet.Dimension.End.Row;
-                for (int row = 2; row <= rowCount; row++)
-                {
-                    string[] values = new string[3];
-                    for (int col = 1; col <= 3; col++)
-                    {
-                        values[col - 1] = worksheet.Cells[row, col].Value.ToString()!;
-                    }
-                    Location item = new Location()
-                    {
-                        LocationName = values[0],
-                        LocationId = values[1],
-                        IsClearance = values[2]
-                    };
-                    list.Add(item);
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("HomeController.cs, at line 47: " + ex.StackTrace);
-        }
-        return View(list);
+        Context context = new();
+        return View(context.GetLocations());
     }
 
     public IActionResult Add()
@@ -57,190 +29,38 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult Add(Location _objLocation)
     {
-        bool found = false;
-        int rowCount = 0;
-        FileInfo file = new FileInfo(@"/Users/carlolsen/projects/FloorLocation/FloorLocation/FLOOR_LOCATION.xlsx");
-        try
-        {
-            using (ExcelPackage package = new ExcelPackage(file))
-            {
-                ExcelWorksheet worksheet = package.Workbook.Worksheets["WMS Location Floor Location"];
-                rowCount = worksheet.Dimension.End.Row;
-                for (int row = 2; row <= rowCount; row++)
-                {
-                    if (_objLocation.LocationName == worksheet.Cells[row, 1].Value.ToString()!)
-                    {
-                        found = true;
-                    }
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("HomeController.cs, at line 80: " + ex.StackTrace);
-        }
-        if(found == true)
-        {
-            // Validation Failed: Duplicate Location Name
-            return RedirectToAction("Index");
-        }
-        else
-        {
-            try
-            {
-                using (ExcelPackage package = new ExcelPackage(file))
-                {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets["WMS Location Floor Location"];
-                    int newRow = rowCount + 1;
-                    worksheet.InsertRow(newRow, 1);
-                    string A = @"A" + newRow.ToString();
-                    string B = @"B" + newRow.ToString();
-                    string C = @"C" + newRow.ToString();
-                    worksheet.Cells[A].Value = _objLocation.LocationName;
-                    worksheet.Cells[B].Value = _objLocation.LocationId;
-                    worksheet.Cells[C].Value = _objLocation.IsClearance;
-                    package.Save();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("HomeController.cs, at line 105: " + ex.StackTrace);
-            }
-            // Validation Successful: Location Name New
-            return RedirectToAction("Index");
-        }
+        Context context = new();
+        context.AddLocation(_objLocation);
+        return RedirectToAction("Index");
     }
 
     public IActionResult Update(string LocationName = "")
     {
-        Location item = new Location();
-        try
-        {
-            FileInfo file = new FileInfo(@"/Users/carlolsen/projects/FloorLocation/FloorLocation/FLOOR_LOCATION.xlsx");
-            using (ExcelPackage package = new ExcelPackage(file))
-            {
-                ExcelWorksheet worksheet = package.Workbook.Worksheets["WMS Location Floor Location"];
-                int rowCount = worksheet.Dimension.End.Row;
-                for (int row = 2; row <= rowCount; row++)
-                {
-                    if (LocationName == worksheet.Cells[row, 1].Value.ToString()!)
-                    {
-                        string[] values = new string[3];
-                        for (int col = 1; col <= 3; col++)
-                        {
-                            values[col - 1] = worksheet.Cells[row, col].Value.ToString()!;
-                        }
-                        item = new Location
-                        {
-                            LocationName = values[0],
-                            LocationId = values[1],
-                            IsClearance = values[2]
-                        };
-                    }
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("HomeController.cs, at line 125: " + ex.StackTrace);
-        }
-        return View(item);
+        Context context = new();
+        Location _objLocation = context.GetLocation(LocationName);
+        return View(_objLocation);
     }
 
     [HttpPost]
     public IActionResult Update(Location _objLocation)
     {
-        FileInfo file = new FileInfo(@"/Users/carlolsen/projects/FloorLocation/FloorLocation/FLOOR_LOCATION.xlsx");
-        try
-        {
-            using (ExcelPackage package = new ExcelPackage(file))
-            {
-                ExcelWorksheet worksheet = package.Workbook.Worksheets["WMS Location Floor Location"];
-                int rowCount = worksheet.Dimension.End.Row;
-                for (int row = 2; row <= rowCount; row++)
-                {
-                    if (_objLocation.LocationName == worksheet.Cells[row, 1].Value.ToString()!)
-                    {
-                        string A = @"A" + row.ToString();
-                        string B = @"B" + row.ToString();
-                        string C = @"C" + row.ToString();
-                        worksheet.Cells[A].Value = _objLocation.LocationName;
-                        worksheet.Cells[B].Value = _objLocation.LocationId;
-                        worksheet.Cells[C].Value = _objLocation.IsClearance;
-                        package.Save();
-                    }
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("HomeController.cs, at line 80: " + ex.StackTrace);
-        }
-        // Validation Successful: Location Name Found
+        Context context = new();
+        context.UpdateLocation(_objLocation);
         return RedirectToAction("Index");
     }
 
     public IActionResult Delete(string LocationName = "")
     {
-        Location item = new Location();
-        try
-        {
-            FileInfo file = new FileInfo(@"/Users/carlolsen/projects/FloorLocation/FloorLocation/FLOOR_LOCATION.xlsx");
-            using (ExcelPackage package = new ExcelPackage(file))
-            {
-                ExcelWorksheet worksheet = package.Workbook.Worksheets["WMS Location Floor Location"];
-                int rowCount = worksheet.Dimension.End.Row;
-                for (int row = 2; row <= rowCount; row++)
-                {
-                    if (LocationName == worksheet.Cells[row, 1].Value.ToString()!)
-                    {
-                        string[] values = new string[3];
-                        for (int col = 1; col <= 3; col++)
-                        {
-                            values[col - 1] = worksheet.Cells[row, col].Value.ToString()!;
-                        }
-                        item = new Location
-                        {
-                            LocationName = values[0],
-                            LocationId = values[1],
-                            IsClearance = values[2]
-                        };
-                    }
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("HomeController.cs, at line 167: " + ex.StackTrace);
-        }
-        return View(item);
+        Context context = new();
+        Location _objLocation = context.GetLocation(LocationName);
+        return View(_objLocation);
     }
 
     [HttpPost]
     public IActionResult Delete(Location _objLocation)
     {
-        FileInfo file = new FileInfo(@"/Users/carlolsen/projects/FloorLocation/FloorLocation/FLOOR_LOCATION.xlsx");
-        try
-        {
-            using (ExcelPackage package = new ExcelPackage(file))
-            {
-                ExcelWorksheet worksheet = package.Workbook.Worksheets["WMS Location Floor Location"];
-                int rowCount = worksheet.Dimension.End.Row;
-                for (int row = 2; row <= rowCount; row++)
-                {
-                    if (_objLocation.LocationName == worksheet.Cells[row, 1].Value.ToString()!)
-                    {
-                        worksheet.DeleteRow(row, 1);
-                        package.Save();
-                    }
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("HomeController.cs, at line 80: " + ex.StackTrace);
-        }
-        // Validation Successful: Location Name Found
+        Context context = new();
+        context.DeleteLocation(_objLocation);
         return RedirectToAction("Index");
     }
 
