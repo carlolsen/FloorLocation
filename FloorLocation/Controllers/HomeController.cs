@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics;
-using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using FloorLocation.Models;
-using OfficeOpenXml;
 
 namespace FloorLocation.Controllers;
 
@@ -15,10 +13,11 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    public IActionResult Index()
+    public IActionResult Index(int PageNumber = 1)
     {
         Context context = new();
-        return View(context.GetLocations());
+        List<Location> list = context.GetPagedLocations(5, PageNumber);
+        return View(list);
     }
 
     public IActionResult Add()
