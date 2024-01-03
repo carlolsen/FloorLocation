@@ -10,6 +10,7 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
     <PackageReference Include="EPPlus" Version="7.0.5" />
+    <PackageReference Include="NonFactors.Grid.Mvc6" Version="7.2.0" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="Views\Home\EmptyClass.cshtml" />
