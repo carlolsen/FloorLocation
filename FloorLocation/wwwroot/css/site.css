@@ -38,16 +38,46 @@ table.table {
 
 .paging {
     display: flex;
+    width: 312px;
 }
 
 .paging a {
     display:inline-block;
-    width: 100%;
+    width: 40px;
     height: 100%;
-    margin: 0px;
+    margin: 0px 4px;
     padding: 0px 4px;
-    border: none;
+    border: 1px solid transparent;
+    border-radius: 5px;
     text-decoration: none;
+    text-align: center;
+    background-color: transparent;
+    color: #000000;
+}
+
+.paging a:hover {
+    border: 1px solid #eeeeff;
+}
+
+.paging a.inactive {
+    background-color: transparent;
+    color: #0000ff;
+}
+
+.paging a.active {
+    border: 1px solid #eeeeee;
+    background-color: #eeeeee;
+    color: #000000;
+}
+
+.paging div {
+    display: inline-block;
+    width: 40px;
+    height: 100%;
+    margin: 0px 4px;
+    padding: 0px 4px;
+    border: 1px solid transparent;
+    border-radius: 5px;
     color: #000000;
 }
 
