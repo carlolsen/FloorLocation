@@ -34,7 +34,7 @@ namespace FloorLocation.Models
             try
             {
                 int recordCount = GetRecordCount();
-                double rawPageCount = recordCount / _pageSize;
+                double rawPageCount = (double)recordCount / (double)_pageSize;
                 pageCount = (int)Math.Ceiling(rawPageCount);
             }
             catch (Exception ex)

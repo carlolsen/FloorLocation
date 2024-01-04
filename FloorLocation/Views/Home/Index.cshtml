@@ -17,6 +17,12 @@
         pageNumber = (int?)@ViewData["PageNumber"];
     }
     string btnClass = "inactive";
+    int? firstSetPage = (pageNumber * 5) - 4;
+    int? lastSetPage = pageNumber * 5;
+    if(lastPage > recordCount)
+    {
+        lastPage = recordCount;
+    }
 }
 <div class="wrapper">
     <div class="container">
@@ -88,7 +94,7 @@
                                 @Html.ActionLink(pageCount.ToString(), "Index", "Home", new { PageNumber = pageCount }, new { @class = btnClass })
                             </div>
                             <div class="info">
-                                @(pageNumber * 5 - 4) - @(pageNumber * 5) of @recordCount items
+                                @firstSetPage - @lastSetPage of @recordCount items
                             </div>
                         </div>
                     </td>
