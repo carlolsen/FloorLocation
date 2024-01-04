@@ -2,6 +2,11 @@
 @{
     ViewData["Title"] = "Delete Location";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int? pageNumber = 0;
+    if (@ViewData["PageNumber"] is not null)
+    {
+        pageNumber = (int?)@ViewData["PageNumber"];
+    }
 }
 <div class="wrapper">
     <div class="container">
@@ -30,7 +35,7 @@
                     </td>
                 </tr>
             </table>
-            <div class="btnRow"><input type="submit" value="DELETE" class="btn" /><div class="btn">@Html.ActionLink("CANCEL", "Index")</div></div>
+            <div class="btnRow"><input type="submit" value="DELETE" class="btn" /><div class="btn">@Html.ActionLink("CANCEL", "Index", new { PageNumber = pageNumber })</div></div>
         }
     </div>
 </div>

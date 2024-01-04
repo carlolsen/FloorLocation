@@ -50,9 +50,9 @@
                             @Html.DisplayTextFor(modelItem => item.IsClearance)
                         </td>
                         <td>
-                            @Html.ActionLink("Update", "Update", new { LocationName = item.LocationName }, new { @class = "btn" })
+                            @Html.ActionLink("Update", "Update", new { LocationName = item.LocationName, PageNumber = pageNumber }, new { @class = "btn" })
                             |
-                            @Html.ActionLink("Delete", "Delete", new { LocationName = item.LocationName }, new { @class = "btn" })
+                            @Html.ActionLink("Delete", "Delete", new { LocationName = item.LocationName, PageNumber = pageNumber }, new { @class = "btn" })
                         </td>
                     </tr>
                 }

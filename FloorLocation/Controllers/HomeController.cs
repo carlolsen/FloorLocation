@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using FloorLocation.Models;
+using System;
 
 namespace FloorLocation.Controllers;
 
@@ -31,41 +32,44 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult Add(Location _objLocation)
+    public IActionResult Add(Location _objLocation, int PageNumber = 1)
     {
         Context context = new();
+        int pageCount = context.GetPageCount();
         context.AddLocation(_objLocation);
-        return RedirectToAction("Index");
+        return RedirectToAction("Index", new { PageNumber = pageCount });
     }
 
-    public IActionResult Update(string LocationName = "")
+    public IActionResult Update(string LocationName = "", int PageNumber = 1)
     {
         Context context = new();
         Location _objLocation = context.GetLocation(LocationName);
+        ViewData["PageNumber"] = PageNumber;
         return View(_objLocation);
     }
 
     [HttpPost]
-    public IActionResult Update(Location _objLocation)
+    public IActionResult Update(Location _objLocation, int PageNumber = 1)
     {
         Context context = new();
         context.UpdateLocation(_objLocation);
-        return RedirectToAction("Index");
+        return RedirectToAction("Index", new { PageNumber });
     }
 
-    public IActionResult Delete(string LocationName = "")
+    public IActionResult Delete(string LocationName = "", int PageNumber = 1)
     {
         Context context = new();
         Location _objLocation = context.GetLocation(LocationName);
+        ViewData["PageNumber"] = PageNumber;
         return View(_objLocation);
     }
 
     [HttpPost]
-    public IActionResult Delete(Location _objLocation)
+    public IActionResult Delete(Location _objLocation, int PageNumber = 1)
     {
         Context context = new();
         context.DeleteLocation(_objLocation);
-        return RedirectToAction("Index");
+        return RedirectToAction("Index", new { PageNumber });
     }
 
     public IActionResult Privacy()
