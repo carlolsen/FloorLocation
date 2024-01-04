@@ -19,9 +19,9 @@
     string btnClass = "inactive";
     int? firstSetPage = (pageNumber * 5) - 4;
     int? lastSetPage = pageNumber * 5;
-    if(lastPage > recordCount)
+    if(lastSetPage > recordCount)
     {
-        lastPage = recordCount;
+        lastSetPage = recordCount;
     }
 }
 <div class="wrapper">
