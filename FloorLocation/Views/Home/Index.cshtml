@@ -20,7 +20,6 @@
 }
 <div class="wrapper">
     <div class="container">
-        <p>Page Size: 5, Total Pages: @pageCount Total Records: @recordCount, Page Number: @pageNumber</p>
         <a asp-action="Add" class="btn">Add Location</a>
         <table class="table">
             <thead>
@@ -53,39 +52,44 @@
                 }
                 <tr>
                     <td colspan="4">
-                        <div class="paging">
-                            @if (pageNumber == 1) { btnClass = "active"; } else { btnClass = "inactive"; }
-                            @Html.ActionLink("1", "Index", "Home", new { PageNumber = 1 }, new { @class = btnClass })
-                            @if (pageNumber < 5)
-                            {
-                                for (var i = 2; i <= 5; i++)
+                        <div class="pageNavigation">
+                            <div class="paging">
+                                @if (pageNumber == 1) { btnClass = "active"; } else { btnClass = "inactive"; }
+                                @Html.ActionLink("1", "Index", "Home", new { PageNumber = 1 }, new { @class = btnClass })
+                                @if (pageNumber < 5)
                                 {
-                                    if (pageNumber != 1 && i == pageNumber) { btnClass = "active"; } else { btnClass = "inactive"; }
-                                    @Html.ActionLink(i.ToString(), "Index", "Home", new { PageNumber = i }, new { @class = btnClass })
+                                    for (var i = 2; i <= 5; i++)
+                                    {
+                                        if (pageNumber != 1 && i == pageNumber) { btnClass = "active"; } else { btnClass = "inactive"; }
+                                        @Html.ActionLink(i.ToString(), "Index", "Home", new { PageNumber = i }, new { @class = btnClass })
+                                    }
+                                    <div>...</div>
                                 }
-                                <div>...</div>
-                            }
-                            else if (pageNumber > (pageCount - 4))
-                            {
-                                <div>...</div>
-                                for (var i = (pageCount - 4); i < pageCount; i++)
+                                else if (pageNumber > (pageCount - 4))
                                 {
-                                    if (pageNumber != 1 && i == pageNumber) { btnClass = "active"; } else { btnClass = "inactive"; }
-                                    @Html.ActionLink(i.ToString(), "Index", "Home", new { PageNumber = i }, new { @class = btnClass })
+                                    <div>...</div>
+                                    for (var i = (pageCount - 4); i < pageCount; i++)
+                                    {
+                                        if (pageNumber != 1 && i == pageNumber) { btnClass = "active"; } else { btnClass = "inactive"; }
+                                        @Html.ActionLink(i.ToString(), "Index", "Home", new { PageNumber = i }, new { @class = btnClass })
+                                    }
                                 }
-                            }
-                            else
-                            {
-                                <div>...</div>
-                                for (var i = (pageNumber - 1); i < (pageNumber + 2); i++)
+                                else
                                 {
-                                    if (pageNumber != 1 && i == pageNumber) { btnClass = "active"; } else { btnClass = "inactive"; }
-                                    @Html.ActionLink(i.ToString(), "Index", "Home", new { PageNumber = i }, new { @class = btnClass })
+                                    <div>...</div>
+                                    for (var i = (pageNumber - 1); i < (pageNumber + 2); i++)
+                                    {
+                                        if (pageNumber != 1 && i == pageNumber) { btnClass = "active"; } else { btnClass = "inactive"; }
+                                        @Html.ActionLink(i.ToString(), "Index", "Home", new { PageNumber = i }, new { @class = btnClass })
+                                    }
+                                    <div>...</div>
                                 }
-                                <div>...</div>
-                            }
-                            @if (pageNumber == pageCount) { btnClass = "active"; } else { btnClass = "inactive"; }
-                            @Html.ActionLink(pageCount.ToString(), "Index", "Home", new { PageNumber = pageCount }, new { @class = btnClass })
+                                @if (pageNumber == pageCount) { btnClass = "active"; } else { btnClass = "inactive"; }
+                                @Html.ActionLink(pageCount.ToString(), "Index", "Home", new { PageNumber = pageCount }, new { @class = btnClass })
+                            </div>
+                            <div class="info">
+                                @(pageNumber * 5 - 4) - @(pageNumber * 5) of @recordCount items
+                            </div>
                         </div>
                     </td>
                 </tr>

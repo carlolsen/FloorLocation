@@ -36,8 +36,18 @@ table.table {
     justify-content: space-between;
 }
 
-.paging {
+.pageNavigation {
     display: flex;
+    justify-content: space-between;
+}
+
+.info {
+    display: inline-block;
+    width: 200px;
+}
+
+.paging {
+    display:flex;
     width: 312px;
 }
 
