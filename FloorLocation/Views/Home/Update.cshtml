@@ -2,6 +2,11 @@
 @{
     ViewData["Title"] = "Update Location";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int? pageSize = 0;
+    if (@ViewData["PageSize"] is not null)
+    {
+        pageSize = (int?)@ViewData["PageSize"];
+    }
     int? pageNumber = 0;
     if (@ViewData["PageNumber"] is not null)
     {
@@ -39,7 +44,7 @@
                     </td>
                 </tr>
             </table>
-            <div class="btnRow"><input type="submit" value="UPDATE" class="btn" /><div class="btn">@Html.ActionLink("CANCEL", "Index", new { PageNumber = pageNumber })</div></div>
+            <div class="btnRow"><input type="submit" value="UPDATE" class="btn" /><div class="btn">@Html.ActionLink("CANCEL", "Index", new { PageSize = pageSize, PageNumber = pageNumber })</div></div>
         }
     </div>
 </div>

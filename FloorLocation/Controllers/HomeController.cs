@@ -14,12 +14,13 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    public IActionResult Index(int PageNumber = 1)
+    public IActionResult Index(int PageSize = 5,int PageNumber = 1)
     {
         Context context = new();
         int recordCount = context.GetRecordCount();
-        int pageCount = context.GetPageCount();
-        List<Location> list = context.GetPagedLocations(5, PageNumber);
+        int pageCount = context.GetPageCount(PageSize);
+        List<Location> list = context.GetPagedLocations(PageSize, PageNumber);
+        ViewData["PageSize"] = PageSize;
         ViewData["PageNumber"] = PageNumber;
         ViewData["RecordCount"] = recordCount;
         ViewData["PageCount"] = pageCount;
@@ -32,44 +33,46 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult Add(Location _objLocation, int PageNumber = 1)
+    public IActionResult Add(Location _objLocation, int PageSize = 5)
     {
         Context context = new();
         int pageCount = context.GetPageCount();
         context.AddLocation(_objLocation);
-        return RedirectToAction("Index", new { PageNumber = pageCount });
+        return RedirectToAction("Index", new { PageSize, PageNumber = pageCount });
     }
 
-    public IActionResult Update(string LocationName = "", int PageNumber = 1)
+    public IActionResult Update(string LocationName = "", int PageSize = 5, int PageNumber = 1)
     {
         Context context = new();
         Location _objLocation = context.GetLocation(LocationName);
+        ViewData["PageSize"] = PageSize;
         ViewData["PageNumber"] = PageNumber;
         return View(_objLocation);
     }
 
     [HttpPost]
-    public IActionResult Update(Location _objLocation, int PageNumber = 1)
+    public IActionResult Update(Location _objLocation, int PageSize = 5, int PageNumber = 1)
     {
         Context context = new();
         context.UpdateLocation(_objLocation);
-        return RedirectToAction("Index", new { PageNumber });
+        return RedirectToAction("Index", new { PageSize, PageNumber });
     }
 
-    public IActionResult Delete(string LocationName = "", int PageNumber = 1)
+    public IActionResult Delete(string LocationName = "", int PageSize = 5, int PageNumber = 1)
     {
         Context context = new();
         Location _objLocation = context.GetLocation(LocationName);
+        ViewData["PageSize"] = PageSize;
         ViewData["PageNumber"] = PageNumber;
         return View(_objLocation);
     }
 
     [HttpPost]
-    public IActionResult Delete(Location _objLocation, int PageNumber = 1)
+    public IActionResult Delete(Location _objLocation, int PageSize = 5, int PageNumber = 1)
     {
         Context context = new();
         context.DeleteLocation(_objLocation);
-        return RedirectToAction("Index", new { PageNumber });
+        return RedirectToAction("Index", new { PageSize, PageNumber });
     }
 
     public IActionResult Privacy()
