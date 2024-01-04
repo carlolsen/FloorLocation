@@ -23,13 +23,18 @@ namespace FloorLocation.Models
             }
             return rowCount;
         }
+        public int GetRecordCount()
+        {
+            int recordCount = GetRowCount() - 1;
+            return recordCount;
+        }
         public int GetPageCount(int _pageSize = 5)
         {
             int pageCount = 0;
             try
             {
-                int rowCount = GetRowCount();
-                decimal rawPageCount = rowCount / _pageSize;
+                int recordCount = GetRecordCount();
+                double rawPageCount = recordCount / _pageSize;
                 pageCount = (int)Math.Ceiling(rawPageCount);
             }
             catch (Exception ex)

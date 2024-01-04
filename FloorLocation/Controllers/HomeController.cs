@@ -16,9 +16,11 @@ public class HomeController : Controller
     public IActionResult Index(int PageNumber = 1)
     {
         Context context = new();
+        int recordCount = context.GetRecordCount();
         int pageCount = context.GetPageCount();
         List<Location> list = context.GetPagedLocations(5, PageNumber);
         ViewData["PageNumber"] = PageNumber;
+        ViewData["RecordCount"] = recordCount;
         ViewData["PageCount"] = pageCount;
         return View(list);
     }

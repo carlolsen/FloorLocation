@@ -2,10 +2,14 @@
 @{
     ViewData["Title"] = "Locations";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int? pageCount = 0;
+    if(@ViewData["PageCount"] is not null) {
+        pageCount = (int?)@ViewData["PageCount"];
+    }
 }
 <div class="wrapper">
     <div class="container">
-        <p>Page Number: @ViewData["PageNumber"]</p>
+        <p>Page Size: 5, Total Pages: @pageCount Total Records: @ViewData["RecordCount"], Page Number: @ViewData["PageNumber"]</p>
         <a asp-action="Add" class="btn">Add Location</a>
         <table class="table">
             <thead>
@@ -36,12 +40,17 @@
                         </td>
                     </tr>
                 }
+                <tr>
+                    <td colspan="4">
+                        <div class="paging">
+                        @for (var i = 1; i <= pageCount; i++)
+                        {
+                            @Html.ActionLink(i.ToString(), "Index", "Home", new { PageNumber = i })
+                        }
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
-        @Html.ActionLink("1", "Index", "Home", new { PageNumber = 1 }, new { @class = "btn" })
-        @Html.ActionLink("2", "Index", "Home", new { PageNumber = 2 }, new { @class = "btn" })
-        @Html.ActionLink("3", "Index", "Home", new { PageNumber = 3 }, new { @class = "btn" })
-        @Html.ActionLink("4", "Index", "Home", new { PageNumber = 4 }, new { @class = "btn" })
-        @Html.ActionLink("5", "Index", "Home", new { PageNumber = 5 }, new { @class = "btn" })
     </div>
 </div>
