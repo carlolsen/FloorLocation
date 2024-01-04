@@ -58,9 +58,9 @@
                             @Html.DisplayTextFor(modelItem => item.IsClearance)
                         </td>
                         <td>
-                            @Html.ActionLink("Update", "Update", new { LocationName = item.LocationName, PageSize = pageSize, PageNumber = pageNumber }, new { @class = "btn" })
+                            <button class="btn" id="@item.LocationName" onclick="inlineEdit(this)">Update</button>
                             |
-                            @Html.ActionLink("Delete", "Delete", new { LocationName = item.LocationName, PageSize = pageSize, PageNumber = pageNumber }, new { @class = "btn" })
+                            @Html.ActionLink("Delete", "Delete", new { LocationName = item.LocationName, PageSize = pageSize, PageNumber = pageNumber }, new { @id = item.LocationName, @class = "btn" })
                         </td>
                     </tr>
                 }
@@ -120,4 +120,9 @@
         const size = pageSize.value;
         window.location = "/Home/Index?PageSize=" + size + "&PageNumber=1";
     };
+    function inlineEdit(elem) {
+        alert("hollo " + elem.id);
+        // just replace the entire row with editors and populate it from an api
+        // then save it back after updating the data source showing the updated values
+    }
 </script>
