@@ -4,7 +4,7 @@
 
 @media (min-width: 768px) {
   html {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 
@@ -28,6 +28,35 @@ div.container {
 
 table.table {
     width: 100%;
+}
+
+table.table th {
+    height: 22px;
+    text-align: left;
+}
+
+table.table td {
+    height: 22px;
+}
+
+table.table td span {
+    cursor: pointer;
+}
+
+.cn {
+    width: 70px;
+}
+
+.ci {
+    width: 70px;
+}
+
+.cc {
+    width: 70px;
+}
+
+.cb {
+    width: 140px;
 }
 
 .btnRow {
@@ -92,11 +121,14 @@ table.table {
 }
 
 .btn {
+    display: inline-block;
+    width: 55px;
     border: 1px solid #cccccc;
-    border-radius: 2px;
+    border-radius: 4px;
     background-color: #eeeeee;
-    margin: 2px;
-    padding: 0px 4px;
+    margin: 0px 1px;
+    padding: 0px;
+    text-align: center;
 }
 
 .btn a {

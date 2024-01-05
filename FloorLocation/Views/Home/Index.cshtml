@@ -34,33 +34,33 @@
 }
 <div class="wrapper">
     <div class="container">
-        <a asp-action="Add" class="btn">Add Location</a>
+        <a asp-action="Add" class="btn">Add</a>
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Location Name</th>
-                    <th scope="col">Location Id</th>
-                    <th scope="col">Is Clearance</th>
-                    <th scope="col"></th>
+                    <th scope="col" class="cn">Name</th>
+                    <th scope="col" class="ci">ID</th>
+                    <th scope="col" class="cc">Clearance</th>
+                    <th scope="col" class="cb"></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
+                        <td id="@(item.LocationName + "name")">
                             @Html.DisplayTextFor(modelItem => item.LocationName)
                         </td>
-                        <td>
+                        <td id="@(item.LocationName + "id")">
                             @Html.DisplayTextFor(modelItem => item.LocationId)
                         </td>
-                        <td>
+                        <td id="@(item.LocationName + "clearance")">
                             @Html.DisplayTextFor(modelItem => item.IsClearance)
                         </td>
                         <td>
-                            <button class="btn" id="@item.LocationName" onclick="inlineEdit(this)">Update</button>
+                            <span class="btn" id="@(item.LocationName + "update")" onclick="update(this)">Update</span>
                             |
-                            @Html.ActionLink("Delete", "Delete", new { LocationName = item.LocationName, PageSize = pageSize, PageNumber = pageNumber }, new { @id = item.LocationName, @class = "btn" })
+                            <span class="btn" id="@(item.LocationName + "remove")" onclick="remove(this)">Remove</span>
                         </td>
                     </tr>
                 }
@@ -120,8 +120,11 @@
         const size = pageSize.value;
         window.location = "/Home/Index?PageSize=" + size + "&PageNumber=1";
     };
-    function inlineEdit(elem) {
-        alert("hollo " + elem.id);
+    function update(elem) {
+        const td = elem.parentElement.nodeName;
+        // elem is a button in a td in a tr in a tbody in a table
+        // the id is the LocationName
+        // get the current values of the LocationID and the IsClearance
         // just replace the entire row with editors and populate it from an api
         // then save it back after updating the data source showing the updated values
     }
