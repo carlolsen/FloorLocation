@@ -57,7 +57,7 @@
                         <td id="@(item.LocationName + "clearance")">
                             @Html.DisplayTextFor(modelItem => item.IsClearance)
                         </td>
-                        <td>
+                        <td id="@(item.LocationName + "buttons")">
                             <span class="btn" id="@(item.LocationName + "update")" onclick="update(this)">Update</span>
                             |
                             <span class="btn" id="@(item.LocationName + "remove")" onclick="remove(this)">Remove</span>
