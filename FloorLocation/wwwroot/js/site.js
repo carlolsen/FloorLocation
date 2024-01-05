@@ -19,7 +19,41 @@ function trash(elem) {
 	}
 }
 function save(elem) {
-	console.log('save ' + elem.id);
+	if (!canEdit) {
+		const identity = elem.id;
+		const id = identity.slice(0, -4);
+		const tdButtons = document.getElementById(id + 'buttons');
+		const tdId = document.getElementById(id + 'id');
+		newIdValue = tdId.firstChild.value;
+		console.log(tdId.firstChild.value);
+		tdId.innerHTML = newIdValue;
+		const tdClearance = document.getElementById(id + 'clearance');
+		console.log(tdClearance.firstChild.value);
+		newClearanceValue = tdClearance.firstChild.value;
+		tdClearance.innerHTML = newClearanceValue;
+		tdButtons.innerHTML = '';
+		const btnUpdate = document.createElement('span');
+		btnUpdate.setAttribute('class', 'btn');
+		btnUpdate.setAttribute('onclick', 'update(this)');
+		const textUpdate = document.createTextNode('Update');
+		btnUpdate.appendChild(textUpdate);
+		btnUpdate.setAttribute('id', id + 'update');
+		const btnRemove = document.createElement('span');
+		btnRemove.setAttribute('class', 'btn');
+		btnRemove.setAttribute('onclick', 'remove(this)');
+		const textRemove = document.createTextNode('Remove');
+		btnRemove.appendChild(textRemove);
+		btnRemove.setAttribute('id', id + 'remove');
+		const separate = document.createTextNode(' | ');
+		tdButtons.appendChild(btnUpdate);
+		tdButtons.appendChild(separate);
+		tdButtons.appendChild(btnRemove);
+		originalIdValue = '';
+		originalClearanceValue = '';
+		newIdValue = '';
+		newClearanceValue = '';
+		canEdit = true;
+	}
 }
 function cancel(elem) {
 	if (!canEdit) {
@@ -147,4 +181,3 @@ function update(elem) {
 		tdButtons.appendChild(btnCancel);
 	}
 }
-
