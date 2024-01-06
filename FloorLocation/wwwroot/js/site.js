@@ -12,7 +12,7 @@ async function postData(url = "", data = {}) {
 		},
 		body: JSON.stringify(data),
 	});
-	return response.json();
+	// return response.json();
 }
 
 /*
@@ -23,7 +23,6 @@ postData("/api/update", { LocationName: '10B', LocationId: '1', IsClearance: 'Y'
 
 function trash(elem) {
 	if (!canEdit) {
-		console.log('trash ' + elem.id);
 		const identity = elem.id;
 		const id = identity.slice(0, -5);
 		const tdButtons = document.getElementById(id + 'buttons');
@@ -33,6 +32,13 @@ function trash(elem) {
 		newIdValue = '';
 		newClearanceValue = '';
 		canEdit = true;
+		postData("/api/delete", {
+			LocationName: id,
+			LocationId: "",
+			IsClearance: ""
+		}).then((data) => {
+			window.location = "/Home/Index?PageSize=5&PageNumber=1";
+		});
 	}
 }
 function save(elem) {

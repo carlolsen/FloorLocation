@@ -12,7 +12,7 @@ namespace FloorLocation.Controllers
         {
             Context context = new();
             context.DeleteLocation(_objLocation);
-            return Ok(_objLocation.LocationName + " deleted successfully.");
+            return Ok(_objLocation);
         }
     }
 }
