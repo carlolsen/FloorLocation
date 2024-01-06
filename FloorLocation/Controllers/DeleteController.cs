@@ -10,6 +10,8 @@ namespace FloorLocation.Controllers
         [HttpPost]
         public IActionResult Delete(Location _objLocation)
         {
+            Context context = new();
+            context.DeleteLocation(_objLocation);
             return Ok(_objLocation.LocationName + " deleted successfully.");
         }
     }

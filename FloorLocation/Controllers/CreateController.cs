@@ -10,6 +10,8 @@ namespace FloorLocation.Controllers
         [HttpPost]
         public IActionResult Create(Location _objLocation)
         {
+            Context context = new();
+            context.AddLocation(_objLocation);
             return Ok(_objLocation.LocationName + " created successfully.");
         }
     }
