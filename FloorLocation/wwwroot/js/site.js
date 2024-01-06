@@ -4,6 +4,23 @@ let originalClearanceValue;
 let newIdValue;
 let newClearanceValue;
 
+async function postData(url = "", data = {}) {
+	const response = await fetch(url, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(data),
+	});
+	return response.json();
+}
+
+/*
+postData("/api/update", { LocationName: '10B', LocationId: '1', IsClearance: 'Y' }).then((data) => {
+	console.log(data);
+});
+*/
+
 function trash(elem) {
 	if (!canEdit) {
 		console.log('trash ' + elem.id);
