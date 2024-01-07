@@ -12,7 +12,7 @@ namespace FloorLocation.Controllers
         {
             Context context = new();
             context.UpdateLocation(_objLocation);
-            return Ok(_objLocation.LocationName + " updated successfully.");
+            return Ok(_objLocation);
         }
     }
 }

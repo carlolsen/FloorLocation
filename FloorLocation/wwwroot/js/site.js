@@ -4,11 +4,11 @@ let originalClearanceValue;
 let newIdValue;
 let newClearanceValue;
 
-async function postData(url = "", data = {}) {
+async function postData(url = '', data = {}) {
 	const response = await fetch(url, {
-		method: "POST",
+		method: 'POST',
 		headers: {
-			"Content-Type": "application/json",
+			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify(data),
 	});
@@ -32,12 +32,12 @@ function trash(elem) {
 		newIdValue = '';
 		newClearanceValue = '';
 		canEdit = true;
-		postData("/api/delete", {
+		postData('/api/delete', {
 			LocationName: id,
-			LocationId: "",
-			IsClearance: ""
+			LocationId: '',
+			IsClearance: '',
 		}).then((data) => {
-			window.location = "/Home/Index?PageSize=5&PageNumber=1";
+			window.location = '/Home/Index?PageSize=5&PageNumber=1';
 		});
 	}
 }
@@ -73,9 +73,16 @@ function save(elem) {
 		tdButtons.appendChild(btnRemove);
 		originalIdValue = '';
 		originalClearanceValue = '';
+		canEdit = true;
+		postData('/api/update', {
+			LocationName: id,
+			LocationId: newIdValue,
+			IsClearance: newClearanceValue,
+		}).then((data) => {
+			console.log(data);
+		});
 		newIdValue = '';
 		newClearanceValue = '';
-		canEdit = true;
 	}
 }
 function cancel(elem) {
@@ -135,7 +142,7 @@ function remove(elem) {
 		btnDelete.setAttribute('id', id + 'trash');
 		const btnCancel = document.createElement('span');
 		btnCancel.setAttribute('class', 'btn');
-		btnCancel.setAttribute('style', 'background-color:#990099;color:#ffffff');
+		btnCancel.setAttribute('style', 'background-color:#000000;color:#ffffff');
 		btnCancel.setAttribute('onclick', 'cancel(this)');
 		const textCancel = document.createTextNode('Cancel');
 		btnCancel.appendChild(textCancel);
@@ -193,7 +200,7 @@ function update(elem) {
 		btnSave.setAttribute('id', id + 'save');
 		const btnCancel = document.createElement('span');
 		btnCancel.setAttribute('class', 'btn');
-		btnCancel.setAttribute('style', 'background-color:#990099;color:#ffffff');
+		btnCancel.setAttribute('style', 'background-color:#000000;color:#ffffff');
 		btnCancel.setAttribute('onclick', 'cancel(this)');
 		const textCancel = document.createTextNode('Cancel');
 		btnCancel.appendChild(textCancel);
