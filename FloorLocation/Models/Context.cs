@@ -1,13 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Text.RegularExpressions;
 using OfficeOpenXml;
 
 namespace FloorLocation.Models
 {
 	public class Context
-
 	{
 		public FileInfo file = new(@"/Users/carlolsen/projects/FloorLocation/FloorLocation/FLOOR_LOCATION.xlsx");
+        static string CleanInput(string strIn)
+        {
+            // Replace invalid characters with empty strings.
+            try
+            {
+                return Regex.Replace(strIn, @"[^\w\.@-]", "",
+                                     RegexOptions.None, TimeSpan.FromSeconds(1.5));
+            }
+            // If we timeout when replacing invalid characters,
+            // we should return Empty.
+            catch (RegexMatchTimeoutException)
+            {
+                return String.Empty;
+            }
+        }
         public int GetRowCount()
         {
             int rowCount = 0;
@@ -145,8 +161,9 @@ namespace FloorLocation.Models
                     string A = @"A" + newRow.ToString();
                     string B = @"B" + newRow.ToString();
                     string C = @"C" + newRow.ToString();
+                    string locationId = CleanInput(_objLocation.LocationId!);
                     worksheet.Cells[A].Value = _objLocation.LocationName;
-                    worksheet.Cells[B].Value = _objLocation.LocationId;
+                    worksheet.Cells[B].Value = locationId;
                     worksheet.Cells[C].Value = _objLocation.IsClearance;
                     package.Save();
                 }
@@ -202,8 +219,9 @@ namespace FloorLocation.Models
                         string A = @"A" + row.ToString();
                         string B = @"B" + row.ToString();
                         string C = @"C" + row.ToString();
+                        string locationId = CleanInput(_objLocation.LocationId!);
                         worksheet.Cells[A].Value = _objLocation.LocationName;
-                        worksheet.Cells[B].Value = _objLocation.LocationId;
+                        worksheet.Cells[B].Value = locationId;
                         worksheet.Cells[C].Value = _objLocation.IsClearance;
                         package.Save();
                     }
